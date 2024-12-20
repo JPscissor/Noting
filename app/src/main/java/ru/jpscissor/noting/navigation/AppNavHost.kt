@@ -1,13 +1,12 @@
 package ru.jpscissor.noting.navigation
-
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import ru.jpscissor.noting.screens.Add
-import ru.jpscissor.noting.screens.Main
-import ru.jpscissor.noting.screens.Note
-import ru.jpscissor.noting.screens.Start
+import ru.jpscissor.noting.screens.AddScreen
+import ru.jpscissor.noting.screens.MainScreen
+import ru.jpscissor.noting.screens.NoteScreen
+import ru.jpscissor.noting.screens.StartScreen
 
 sealed class NavRoute (val route: String) {
     object Start: NavRoute("start_screen")
@@ -21,10 +20,10 @@ fun AppNavHost() {
     val navController = rememberNavController()
 
     NavHost(navController, startDestination = NavRoute.Start.route) {
-        composable(NavRoute.Start.route){ Start(navController)}
-        composable(NavRoute.Main.route){ Main(navController) }
-        composable(NavRoute.Add.route){ Add(navController) }
-        composable(NavRoute.Note.route){ Note(navController) }
+        composable(NavRoute.Start.route){ StartScreen(navController)}
+        composable(NavRoute.Main.route){ MainScreen(navController) }
+        composable(NavRoute.Add.route){ AddScreen(navController) }
+        composable(NavRoute.Note.route){ NoteScreen(navController) }
     }
 
 }

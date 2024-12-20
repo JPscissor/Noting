@@ -36,10 +36,10 @@ class MainActivity : ComponentActivity() {
                         TopAppBar(
                             title = { Text("Noting App") },
                             colors = TopAppBarDefaults.topAppBarColors(
-                                containerColor = Color.Magenta,
+                                containerColor = Color.DarkGray,
                                 scrolledContainerColor = Color.Gray,
                                 navigationIconContentColor = Color.White,
-                                titleContentColor = Color.Black,
+                                titleContentColor = Color.White,
                                 actionIconContentColor = Color.White
                             )
                         )

@@ -7,6 +7,9 @@ plugins {
 android {
     namespace = "ru.jpscissor.noting"
     compileSdk = 35
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.1"
+    }
 
     defaultConfig {
         applicationId = "ru.jpscissor.noting"
@@ -56,6 +59,10 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation(libs.androidx.material)
+    implementation(libs.ui)
+    implementation(libs.ui.tooling.preview)
 
     implementation(libs.androidx.navigation.compose)
 
