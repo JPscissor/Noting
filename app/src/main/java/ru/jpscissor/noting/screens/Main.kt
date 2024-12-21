@@ -1,6 +1,7 @@
 package ru.jpscissor.noting.screens
 
 //noinspection UsingMaterialAndMaterial3Libraries
+import android.app.Application
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,10 +32,25 @@ import ru.jpscissor.noting.navigation.NavRoute
 import ru.jpscissor.noting.ui.theme.NotingTheme
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
+import ru.jpscissor.noting.MainViewModel
+import ru.jpscissor.noting.MainViewModelFactory
+import ru.jpscissor.noting.model.Note
 
 
 @Composable
 fun MainScreen(navController: NavHostController) {
+
+    val context = LocalContext.current
+    val mViewModel : MainViewModel =
+        viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
+
+    val notes = mViewModel.readTest.observeAsState(listOf()).value
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         floatingActionButton = {
@@ -62,16 +78,22 @@ fun MainScreen(navController: NavHostController) {
                 style = MaterialTheme.typography.h6
             )
 
-            NoteItem("Note 1", "text text text", navController)
-            NoteItem("Note 1", "text text text", navController)
-            NoteItem("Note 1", "text text text", navController)
+//            NoteItem("Note 1", "text text text", navController)
+//            NoteItem("Note 1", "text text text", navController)
+//            NoteItem("Note 1", "text text text", navController)
+
+            LazyColumn {
+                items(notes) {note ->
+                    NoteItem(note = note, navController = navController)
+                }
+            }
         }
     }
 }
 
 
 @Composable
-fun NoteItem(title: String, subtitle: String, navController: NavHostController){
+fun NoteItem(note: Note, navController: NavHostController){
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -81,13 +103,13 @@ fun NoteItem(title: String, subtitle: String, navController: NavHostController){
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = title,
+                    text = note.title,
                     style = MaterialTheme.typography.h6,
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = subtitle,
+                    text = note.subtitle,
                     style = MaterialTheme.typography.body2
                 )
             }

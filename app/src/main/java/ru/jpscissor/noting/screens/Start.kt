@@ -1,5 +1,6 @@
 package ru.jpscissor.noting.screens
 
+import android.app.Application
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,18 +17,30 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import ru.jpscissor.noting.MainViewModel
+import ru.jpscissor.noting.MainViewModelFactory
 import ru.jpscissor.noting.navigation.NavRoute
 import ru.jpscissor.noting.ui.theme.NotingTheme
+import ru.jpscissor.noting.utils.TYPE_DATABASE
+import ru.jpscissor.noting.utils.TYPE_FIREBASE
+import ru.jpscissor.noting.utils.TYPE_ROOM
 
 
 @Composable
 fun StartScreen(navController: NavHostController) {
+
+    val context = LocalContext.current
+    val mViewModel : MainViewModel =
+        viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
+
     Scaffold(
         modifier = Modifier.fillMaxSize()
     ) { paddingValues ->
@@ -48,7 +61,10 @@ fun StartScreen(navController: NavHostController) {
             )
 
             Button(
-                onClick = { navController.navigate(route = NavRoute.Main.route) },
+                onClick = {
+                    mViewModel.initDatabase(TYPE_ROOM)
+                    navController.navigate(route = NavRoute.Main.route)
+                          },
                 colors = ButtonColors(
                     containerColor = Color.DarkGray,
                     contentColor = Color.White,
@@ -63,7 +79,10 @@ fun StartScreen(navController: NavHostController) {
             }
 
             Button(
-                onClick = { navController.navigate(route = NavRoute.Main.route) },
+                onClick = {
+                    mViewModel.initDatabase(TYPE_FIREBASE)
+                    navController.navigate(route = NavRoute.Main.route)
+                          },
                 colors = ButtonColors(
                     containerColor = Color.DarkGray,
                     contentColor = Color.White,

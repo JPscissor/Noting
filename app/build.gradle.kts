@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    kotlin("kapt")
 }
 
 android {
@@ -65,5 +66,11 @@ dependencies {
     implementation(libs.ui.tooling.preview)
 
     implementation(libs.androidx.navigation.compose)
+
+    implementation(libs.androidx.runtime.livedata)
+    implementation(libs.room.runtime)
+    //noinspection KaptUsageInsteadOfKsp
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
 
 }
